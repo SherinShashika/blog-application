@@ -7,8 +7,8 @@ const express = require('express');
 const cors = require("cors");
 
 const dbConnect = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
 const passport = require('./config/passport');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,7 +30,11 @@ app.get(
     passport.authenticate('jwt', { session: false }), (req, res) => {
         res.json({
             message: "Protected route accessed",
-            user: req.user
+            user: {
+                id: req.user._id,
+                name: req.user.name,
+                email: req.user.email
+            }
         })
     }
 )
