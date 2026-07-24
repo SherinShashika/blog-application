@@ -28,8 +28,29 @@ const getPosts = async (req, res) => {
             .sort({ createdAt: -1 });
 
 
-        res.status(201).json({
+        res.status(200).json({
             posts
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+const getPostById = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id)
+            .populate("author", "name email")
+
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found"
+            });
+        }
+
+        res.status(200).json({
+            post
         })
     } catch (error) {
         res.status(500).json({
@@ -40,5 +61,6 @@ const getPosts = async (req, res) => {
 
 module.exports = {
     createPost,
-    getPosts
+    getPosts,
+    getPostById,
 }
