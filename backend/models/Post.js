@@ -13,13 +13,13 @@ const postSchema = new mongoose.Schema(
         },
         author: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "Users",
             required: true
-        },
+        }
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = mongoose.model("Posts", postSchema);
+module.exports = mongoose.model("Post", postSchema);

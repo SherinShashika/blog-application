@@ -1,5 +1,4 @@
 const Post = require('../models/Post');
-const User = require('../models/User');
 
 const createPost = async (req, res) => {
     try {
@@ -22,6 +21,24 @@ const createPost = async (req, res) => {
     }
 }
 
+const getPosts = async (req, res) => {
+    try {
+        const posts = await Post.find()
+            .populate("author", "name email")
+            .sort({ createdAt: -1 });
+
+
+        res.status(201).json({
+            posts
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     createPost,
+    getPosts
 }
