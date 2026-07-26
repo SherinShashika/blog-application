@@ -1,6 +1,6 @@
 const Post = require('../models/Post');
 
-const createPost = async (req, res) => {
+const createPost = async (req, res, next) => {
     try {
         const { title, content } = req.body;
 
@@ -15,13 +15,11 @@ const createPost = async (req, res) => {
             post
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error);
     }
 }
 
-const getPosts = async (req, res) => {
+const getPosts = async (req, res, next) => {
     try {
         const posts = await Post.find()
             .populate("author", "name email")
@@ -32,13 +30,11 @@ const getPosts = async (req, res) => {
             posts
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error);
     }
 }
 
-const getPostById = async (req, res) => {
+const getPostById = async (req, res, next) => {
     try {
         const post = await Post.findById(req.params.id)
             .populate("author", "name email")
@@ -53,13 +49,11 @@ const getPostById = async (req, res) => {
             post
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error);
     }
 }
 
-const updatePost = async (req, res) => {
+const updatePost = async (req, res, next) => {
     try {
         const { title, content } = req.body;
 
@@ -87,13 +81,11 @@ const updatePost = async (req, res) => {
             post
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error);
     }
 }
 
-const deletePost = async (req, res) => {
+const deletePost = async (req, res, next) => {
     try {
         const post = await Post.findById(req.params.id)
 
@@ -116,9 +108,7 @@ const deletePost = async (req, res) => {
             post
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error);
     }
 }
 

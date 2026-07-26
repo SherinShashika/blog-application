@@ -10,6 +10,8 @@ const dbConnect = require('./config/db');
 const passport = require('./config/passport');
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
+const errorHandler = require('./middleware/errorMiddleware');
+console.log(errorHandler);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,6 +30,7 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api/post', postRoutes)
 
+app.use(errorHandler);
 app.listen(port, () => {
     console.log(`API server listening on port ${port}`);
 })
